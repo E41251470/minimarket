@@ -58,9 +58,7 @@
                                                     Me</label>
                                             </div>
                                         </div>
-                                       <a href="{{ route('admin.dashboard') }}" class="btn btn-primary btn-user btn-block">
-                                          Login
-                                        </a>
+                                       <a href="{{ route('admin.dashboard') }}" class="btn btn-primary btn-user btn-block"> Login </a>
                                         <hr>
                                         <a href="index.html" class="btn btn-google btn-user btn-block">
                                             <i class="fab fa-google fa-fw"></i> Login with Google
