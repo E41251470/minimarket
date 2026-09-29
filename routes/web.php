@@ -1,22 +1,38 @@
 <?php
 
-use App\Http\Controllers\productController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Admin\ProductController;
 
-// Halaman Frontend
 Route::get('/', function () {
     return view('frontend.home');
-})->name('home');
+})->name('frontend');
 
-// Halaman Login
-Route::get('/login', function () {
-    return view('auth.login');
-})->name('login');
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [
+        AuthController::class,
+        'showLogin',
+    ])->name('login');
 
-// Halaman Admin
-Route::get('/admin', function () {
-    return view('admin.dashboard');
-})->name('admin.dashboard');
+    Route::post('/login', [
+        AuthController::class,
+        'login',
+    ])->name('login.process');
+});
 
-// Route Product
-Route::get('/posts', [productController::class, 'index']);
+Route::post('/logout', [
+    AuthController::class,
+    'logout',
+])->middleware('auth')->name('logout');
+
+
+Route::middleware(['auth', 'admin'])
+    ->prefix('admin')
+    ->group(function () {
+        Route::get('/', function () {
+            return view('admin.dashboard');
+        })->name('admin.dashboard');
+
+        Route::resource('products', ProductController::class)
+            ->names('admin.products');
+    });

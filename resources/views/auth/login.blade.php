@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,19 +7,29 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
+
+    <meta name="description" content="Halaman Login Minimarket">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Login</title>
+    <title>Login - Minimarket</title>
 
-     <!-- Custom fonts for this template-->
-    <link href="{{ asset('asset/admin/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+    <!-- Custom fonts for this template -->
+    <link
+        href="{{ asset('asset/admin/vendor/fontawesome-free/css/all.min.css') }}"
+        rel="stylesheet"
+        type="text/css"
+    >
 
     <link
-    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-    rel="stylesheet">
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet"
+    >
 
-    <link rel="stylesheet" href="{{ asset('asset/admin/css/sb-admin-2.min.css') }}">
+    <!-- SB Admin 2 CSS -->
+    <link
+        rel="stylesheet"
+        href="{{ asset('asset/admin/css/sb-admin-2.min.css') }}"
+    >
 
 </head>
 
@@ -32,52 +43,127 @@
             <div class="col-xl-10 col-lg-12 col-md-9">
 
                 <div class="card o-hidden border-0 shadow-lg my-5">
+
                     <div class="card-body p-0">
+
                         <!-- Nested Row within Card Body -->
                         <div class="row">
+
+                            <!-- Login Image -->
                             <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+
+                            <!-- Login Form -->
                             <div class="col-lg-6">
+
                                 <div class="p-5">
+
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">
+                                            Welcome Back!
+                                        </h1>
                                     </div>
-                                    <form class="user">
-                                        <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
-                                                id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address...">
+
+                                    <!-- Error Message -->
+                                    @if ($errors->any())
+                                        <div class="alert alert-danger">
+                                            {{ $errors->first() }}
                                         </div>
-                                        <div class="form-group">
-                                            <input type="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Password">
+                                    @endif
+
+                                    <!-- Success Message -->
+                                    @if (session('success'))
+                                        <div class="alert alert-success">
+                                            {{ session('success') }}
                                         </div>
+                                    @endif
+
+                                    <!-- Login Form -->
+                                    <form
+                                        class="user"
+                                        action="{{ route('login.process') }}"
+                                        method="POST"
+                                    >
+
+                                        @csrf
+
+                                        <!-- Email -->
+                                        <div class="form-group">
+                                            <input
+                                                type="email"
+                                                class="form-control form-control-user"
+                                                id="email"
+                                                name="email"
+                                                value="{{ old('email') }}"
+                                                placeholder="Enter Email Address..."
+                                                required
+                                            >
+                                        </div>
+
+                                        <!-- Password -->
+                                        <div class="form-group">
+                                            <input
+                                                type="password"
+                                                class="form-control form-control-user"
+                                                id="password"
+                                                name="password"
+                                                placeholder="Password"
+                                                required
+                                            >
+                                        </div>
+
+                                        <!-- Remember Me -->
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">Remember
-                                                    Me</label>
+
+                                                <input
+                                                    type="checkbox"
+                                                    class="custom-control-input"
+                                                    id="remember"
+                                                    name="remember"
+                                                    value="1"
+                                                >
+
+                                                <label
+                                                    class="custom-control-label"
+                                                    for="remember"
+                                                >
+                                                    Remember Me
+                                                </label>
+
                                             </div>
                                         </div>
-                                       <a href="{{ route('admin.dashboard') }}" class="btn btn-primary btn-user btn-block"> Login </a>
-                                        <hr>
-                                        <a href="index.html" class="btn btn-google btn-user btn-block">
-                                            <i class="fab fa-google fa-fw"></i> Login with Google
-                                        </a>
-                                        <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                            <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                                        </a>
+
+                                        <!-- Login Button -->
+                                        <button
+                                            type="submit"
+                                            class="btn btn-primary btn-user btn-block"
+                                        >
+                                            Login
+                                        </button>
+
+                                        <div class="account-info">
+                                            <p>
+
+                                            </p>
+                                            <p1>
+                                                Admin: admin@gmail.com / admin123
+                                            </p1>
+
+                                            <p>
+                                                User: user@gmail.com / user123
+                                            </p>
+                                        </div>
+
                                     </form>
-                                    <hr>
-                                    <div class="text-center">
-                                        <a class="small" href="forgot-password.html">Forgot Password?</a>
-                                    </div>
-                                    <div class="text-center">
-                                        <a class="small" href="register.html">Create an Account!</a>
-                                    </div>
+
                                 </div>
+
                             </div>
+
                         </div>
+
                     </div>
+
                 </div>
 
             </div>
@@ -86,15 +172,16 @@
 
     </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script src="{{ asset('asset/admin/vendor/jquery/jquery.min.js') }}"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="{{ asset('asset/admin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+    <!-- Core plugin JavaScript -->
+    <script src="{{ asset('asset/admin/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+
+    <!-- Custom scripts for all pages -->
+    <script src="{{ asset('asset/admin/js/sb-admin-2.min.js') }}"></script>
 
 </body>
 
