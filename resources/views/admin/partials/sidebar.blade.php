@@ -18,7 +18,7 @@
     <hr class="sidebar-divider my-0">
 
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('admin.dashboard') }}">
+        <a class="nav-link" href="#">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
         </a>
@@ -30,17 +30,25 @@
         Manajemen
     </div>
 
-        <li class="nav-item">
-        <a class="nav-link" href="#">
-            <i class="fas fa-fw fa-tags"></i>
-            <span>Kalkulator</span>
-        </a>
-        </li>
 
     <li class="nav-item">
         <a class="nav-link" href="{{ route('admin.products.index') }}">
             <i class="fas fa-fw fa-box"></i>
             <span>Produk</span>
+        </a>
+    </li>
+
+        <li class="nav-item">
+        <a class="nav-link" href="{{ route('admin.cashier.index') }}">
+            <i class="fas fa-fw fa-tags"></i>
+            <span>Transaksi Kasir</span>
+        </a>
+        </li>
+
+            <li class="nav-item">
+        <a class="nav-link" href="#">
+            <i class="fas fa-fw fa-shopping-cart"></i>
+            <span>Riwayat Transaksi</span>
         </a>
     </li>
 
@@ -58,12 +66,6 @@
         </a>
     </li>
 
-    <li class="nav-item">
-        <a class="nav-link" href="#">
-            <i class="fas fa-fw fa-shopping-cart"></i>
-            <span>Transaksi</span>
-        </a>
-    </li>
 
     <li class="nav-item">
         <a class="nav-link" href="#">
