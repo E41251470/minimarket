@@ -200,6 +200,10 @@
                                                 Deskripsi
                                             </th>
 
+                                            <th>
+                                                Gambar
+                                            </th>
+
                                             <th width="18%">
                                                 Aksi
                                             </th>
@@ -274,6 +278,16 @@
 
                                                     {{ $product->description ?? '-' }}
 
+                                                </td>
+
+                                                <td>
+                                                    @if ($product->image)
+                                                        <img src="{{ asset('storage/' . $product->image) }}"
+                                                            alt="Gambar {{ $product->name }}"
+                                                            width="60">
+                                                    @else
+                                                        <span class="text-muted">Belum ada gambar</span>
+                                                    @endif
                                                 </td>
 
                                                 <!-- Aksi -->

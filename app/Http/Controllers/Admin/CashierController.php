@@ -56,12 +56,6 @@ class CashierController extends Controller
 
 
     /*
-    |--------------------------------------------------------------------------
-    | TAHAN TRANSAKSI
-    |--------------------------------------------------------------------------
-    */
-
-    /*
 |--------------------------------------------------------------------------
 | TAHAN TRANSAKSI
 |--------------------------------------------------------------------------
@@ -120,9 +114,7 @@ public function hold(Request $request)
             $subtotal = 0;
             $items = [];
 
-            /*
-             * Ambil data produk dari database.
-             * Saat transaksi ditahan, stok TIDAK dikurangi.
+            /* Ambil data produk dari database. Saat transaksi ditahan, stok TIDAK dikurangi.
              */
             foreach ($validated['items'] as $item) {
 
@@ -142,8 +134,7 @@ public function hold(Request $request)
                 ];
             }
 
-            /*
-             * Ambil nilai tambahan transaksi
+            /* Ambil nilai tambahan transaksi
              */
             $discount = (float) (
                 $validated['discount'] ?? 0
@@ -157,8 +148,7 @@ public function hold(Request $request)
                 $validated['other_fee'] ?? 0
             );
 
-            /*
-             * Hitung total
+            /* Hitung total
              */
             $grandTotal = max(
                 0,
@@ -185,8 +175,7 @@ public function hold(Request $request)
                     ->lockForUpdate()
                     ->firstOrFail();
 
-                /*
-                 * Update transaksi lama
+                /* Update transaksi lama
                  */
                 $transaction->update([
                     'subtotal' => $subtotal,
@@ -208,8 +197,7 @@ public function hold(Request $request)
 
             } else {
 
-                /*
-                 * Buat transaksi baru
+                /* Buat transaksi baru
                  */
                 $transaction = Transaction::create([
                     'transaction_number' =>
@@ -237,8 +225,7 @@ public function hold(Request $request)
                 ]);
             }
 
-            /*
-             * Simpan detail transaksi
+            /* Simpan detail transaksi
              */
             foreach ($items as $item) {
 
@@ -268,8 +255,7 @@ public function hold(Request $request)
             return $transaction;
         });
 
-        /*
-         * Berhasil
+        /* Berhasil
          */
         return response()->json([
             'success' => true,
@@ -279,8 +265,7 @@ public function hold(Request $request)
 
     } catch (\Throwable $e) {
 
-        /*
-         * Jika terjadi error
+        /* Jika terjadi error
          */
         return response()->json([
             'success' => false,

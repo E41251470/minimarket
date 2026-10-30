@@ -229,13 +229,13 @@
                             justify-content-between
                             mb-4">
 
-                    <h1 class="h3 mb-0 text-gray-800">
+                    <o1 class="h3 mb-0 text-gray-800">
 
                         <i class="fas fa-cash-register"></i>
 
                         Kasir
 
-                    </h1>
+                    </o1>
 
                 </div>
 

@@ -119,7 +119,8 @@
                         <div class="card-body">
 
                             <form action="{{ route('admin.products.store') }}"
-                                  method="POST">
+                                  method="POST"
+                                  enctype="multipart/form-data">
 
                                 @csrf
                             <div class="form-group">
@@ -304,6 +305,19 @@
                                         Deskripsi bersifat opsional, maksimal 1000 karakter.
                                     </small>
 
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="image">Gambar Produk</label>
+                                    <input type="file"
+                                        name="image"
+                                        id="image"
+                                        class="form-control-file"
+                                        accept="image/jpeg,image/png,image/webp">
+
+                                    @error('image')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
                                 </div>
 
                                 <hr>

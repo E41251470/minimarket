@@ -67,7 +67,8 @@
                         <div class="card-body">
 
                             <form action="{{ route('admin.products.update', $product->id) }}"
-                                  method="POST">
+                                  method="POST"
+                                  enctype="multipart/form-data">
 
                                 @csrf
                                 @method('PUT')
@@ -92,6 +93,7 @@
                                         </div>
                                     @enderror
                                 </div>
+
 
                                 {{-- Kategori --}}
                                 <div class="form-group">
@@ -123,6 +125,7 @@
                                         </div>
                                     @enderror
                                 </div>
+
 
                                 {{-- Nama Produk --}}
                                 <div class="form-group">
@@ -201,6 +204,32 @@
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="image">Gambar Produk</label>
+
+                                    @if ($product->image)
+                                        <div class="mb-2">
+                                            <img src="{{ asset('storage/' . $product->image) }}"
+                                                alt="Gambar {{ $product->name }}"
+                                                width="120">
+                                        </div>
+                                    @endif
+
+                                    <input type="file"
+                                        name="image"
+                                        id="image"
+                                        class="form-control-file"
+                                        accept="image/jpeg,image/png,image/webp">
+
+                                    <small class="form-text text-muted">
+                                        Kosongkan jika tidak ingin mengganti gambar.
+                                    </small>
+
+                                    @error('image')
+                                        <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </div>
 

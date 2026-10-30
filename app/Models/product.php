@@ -13,6 +13,7 @@ class Product extends Model
         'price',
         'stock',
         'description',
+        'image',
     ];
 
     protected function casts(): array

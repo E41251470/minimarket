@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class ProductController extends Controller
 {
@@ -13,7 +16,7 @@ class ProductController extends Controller
     {
         $products = Product::with('category')
             ->latest()
-            ->paginate(10);
+            ->paginate(5);
 
         return view('admin.products.index', compact('products'));
     }
@@ -34,7 +37,28 @@ class ProductController extends Controller
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'description' => 'nullable|string|max:1000',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
+
+        if ($request->hasFile('image')) {
+            $manager = new ImageManager(new Driver());
+
+            $image = $manager->read(
+                $request->file('image')->getRealPath()
+            );
+
+            // Mengecilkan gambar maksimal 800 x 800 piksel.
+            $image->scaleDown(800, 800);
+
+            $imagePath = 'products/' . uniqid() . '.jpg';
+
+            Storage::disk('public')->put(
+                $imagePath,
+                (string) $image->toJpeg(80)
+            );
+
+            $validated['image'] = $imagePath;
+        }
 
         Product::create($validated);
 
@@ -66,7 +90,32 @@ class ProductController extends Controller
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'description' => 'nullable|string|max:1000',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
+
+        if ($request->hasFile('image')) {
+            $manager = new ImageManager(new Driver());
+
+            $image = $manager->read(
+                $request->file('image')->getRealPath()
+            );
+
+            $image->scaleDown(800, 800);
+
+            $imagePath = 'products/' . uniqid() . '.jpg';
+
+            Storage::disk('public')->put(
+                $imagePath,
+                (string) $image->toJpeg(80)
+            );
+
+            // Hapus gambar lama jika ada.
+            if ($product->image) {
+                Storage::disk('public')->delete($product->image);
+            }
+
+            $validated['image'] = $imagePath;
+        }
 
         $product->update($validated);
 
@@ -77,6 +126,10 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
+        if ($product->image) {
+            Storage::disk('public')->delete($product->image);
+        }
+
         $product->delete();
 
         return redirect()

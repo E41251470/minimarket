@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CashierController;
-
+use App\Http\Controllers\Admin\InvoiceController;
+use App\Http\Controllers\Admin\TransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,7 +56,7 @@ Route::middleware(['auth', 'admin'])
 
         /*
         |--------------------------------------------------------------------------
-        | Dashboard
+        | DASHBOARD
         |--------------------------------------------------------------------------
         */
 
@@ -66,17 +67,25 @@ Route::middleware(['auth', 'admin'])
 
         /*
         |--------------------------------------------------------------------------
-        | Products
+        | PRODUCTS
         |--------------------------------------------------------------------------
         */
 
         Route::resource('products', ProductController::class)
-            ->names('admin.products');
+            ->names([
+                'index'   => 'admin.products.index',
+                'create'  => 'admin.products.create',
+                'store'   => 'admin.products.store',
+                'show'    => 'admin.products.show',
+                'edit'    => 'admin.products.edit',
+                'update'  => 'admin.products.update',
+                'destroy' => 'admin.products.destroy',
+            ]);
 
 
         /*
         |--------------------------------------------------------------------------
-        | Cashier
+        | CASHIER
         |--------------------------------------------------------------------------
         */
 
@@ -85,58 +94,53 @@ Route::middleware(['auth', 'admin'])
             'index',
         ])->name('admin.cashier.index');
 
-
         Route::get('/cashier/search-product', [
             CashierController::class,
             'searchProduct',
         ])->name('admin.cashier.search-product');
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Hold Transaction
-        |--------------------------------------------------------------------------
-        */
 
         Route::post('/cashier/hold', [
             CashierController::class,
             'hold',
         ])->name('admin.cashier.hold');
 
-
-        /*
-        |--------------------------------------------------------------------------
-        | Payment
-        |--------------------------------------------------------------------------
-        */
-
         Route::post('/cashier/pay', [
             CashierController::class,
             'pay',
         ])->name('admin.cashier.pay');
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Held Transactions
-        |--------------------------------------------------------------------------
-        */
 
         Route::get('/cashier/held/{transaction}', [
             CashierController::class,
             'getHeldTransaction',
         ])->name('admin.cashier.held');
 
-
-        /*
-        |--------------------------------------------------------------------------
-        | Delete Held Transaction
-        |--------------------------------------------------------------------------
-        */
-
         Route::delete('/cashier/held/{transaction}', [
             CashierController::class,
             'deleteHeldTransaction',
         ])->name('admin.cashier.held.delete');
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | TRANSACTIONS
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get('/transactions', [
+            TransactionController::class,
+            'index',
+        ])->name('admin.transactions.index');
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | INVOICE PDF
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get('/transactions/{id}/invoice', [
+            InvoiceController::class,
+            'download',
+        ])->name('admin.transactions.invoice');
 
     });
